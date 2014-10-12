@@ -33,3 +33,15 @@ fun dates_in_month (xs : date list , m) =
      
 fun dates_in_months (xs: date list, nil) = []
   | dates_in_months (xs: date list, (hd::tl)) = dates_in_month(xs,hd) @ dates_in_months(xs,tl)
+
+
+fun get_nth (xs: string list, 1) = hd xs
+  | get_nth (xs: string list, n: int) = get_nth(tl xs, n - 1)
+                                                                                    
+val months = ["January", "February", "March", "April", "May", "June",
+              "July", "August","September", "October", "November", "December"]
+
+                                               
+fun date_to_string(d: date) =
+    get_nth(months, #2 d) ^ " " ^ (Int.toString (#3 d)) ^ ", " ^ (Int.toString (#1 d))
+                                               
