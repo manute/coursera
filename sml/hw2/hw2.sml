@@ -1,4 +1,3 @@
-(* Dan Grossman, Coursera PL, HW2 Provided Code *)
 
 (* if you use this function to compare two strings (returns true if the same
    string), then you avoid several of the functions in problem 1 having
@@ -7,6 +6,15 @@ fun same_string(s1 : string, s2 : string) =
     s1 = s2
 
 (* put your solutions for problem 1 here *)
+fun all_except_option (s, []) = NONE
+  | all_except_option (s, x :: xs) =  
+    case same_string(s,x) of
+       true => SOME xs
+     | false => case all_except_option(s, xs) of
+                    NONE => NONE
+                  | SOME y => SOME (x::y) 
+     
+
 
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
@@ -20,3 +28,4 @@ datatype move = Discard of card | Draw
 exception IllegalMove
 
 (* put your solutions for problem 2 here *)
+              
