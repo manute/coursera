@@ -50,4 +50,26 @@ datatype move = Discard of card | Draw
 exception IllegalMove
 
 (* put your solutions for problem 2 here *)
-              
+
+fun card_color (card) =
+    let val (suit, _) = card
+    in
+        case suit of
+            Spades => Black
+          | Clubs => Black
+          | Diamonds => Red
+          | Hearts => Red 
+    end
+
+fun card_value (card) = 
+    let val (_, rank) = card
+    in
+        case rank of         
+           Ace => 11 
+         | Jack => 10 
+         | Queen => 10
+         | King => 10
+         | Num i => i
+     
+          
+    end
