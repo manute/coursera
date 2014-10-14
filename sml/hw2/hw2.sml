@@ -27,6 +27,16 @@ fun get_substitutions2 ([], s) = []
       NONE   => get_substitutions2(xs, s)
     | SOME y => y @ get_substitutions2(xs, s)
 
+fun similar_names (subs: string list list, name) =
+  let val {first:string, middle:string, last:string} = name
+      fun aux ([], result) = result
+        | aux ((x::xs), result) = aux (xs, {first=x, middle=middle, last=last}::result)
+  in 
+    let val all_first_names = first::(get_substitutions1(subs, first))
+    in
+      rev (aux (all_first_names, []))
+    end
+  end    
 
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
