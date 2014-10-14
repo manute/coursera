@@ -69,7 +69,43 @@ fun card_value (card) =
          | Jack => 10 
          | Queen => 10
          | King => 10
-         | Num i => i
-     
-          
+         | Num i => i               
     end
+
+fun remove_card ([], _, e) = raise e
+  | remove_card ((x::xs), c, e) =
+    if x = c 
+    then xs
+    else x::remove_card(xs,c,e)
+                      
+val cards = [(Clubs, Jack), (Spades, Queen), (Hearts, Ace)]
+
+fun all_same_color [] = true
+  | all_same_color (c1::[]) = true
+  | all_same_color (c1::c2::[]) = card_color(c1) = card_color(c2)
+  | all_same_color (c1::c2::c3::tail) = 
+    let 
+      val precondition = card_color(c1) = card_color(c2)
+    in
+      if not precondition 
+      then false 
+      else all_same_color(c2::c3::tail)
+    end 
+  
+fun sum_cards (cs: card list) =
+  let fun aux [] = 0
+        | aux (x::xs) = card_value(x) + aux(xs)
+  in 
+    aux cs
+  end 
+
+fun score (cs, goal) =
+  let val sum = sum_cards cs
+      val preliminary_score = 
+        if sum > goal then 3 * (sum - goal)
+                      else goal - sum
+  in 
+    if all_same_color(cs) 
+    then preliminary_score
+    else preliminary_score div 2
+  end     
